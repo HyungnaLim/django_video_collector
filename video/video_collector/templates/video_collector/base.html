@@ -1,10 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
+{% load static %}
+
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Cute Animal Video Collection</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
+
 <body>
+
+    {% block content %}
+    {% endblock %}
 
 </body>
 </html>
