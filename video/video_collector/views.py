@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
-from .forms import VideoForm
+from .forms import VideoForm, SearchForm
 from .models import Video
 from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
+from django.db.models.functions import Lower
 
 def home(request):
     app_name = 'Cute Animal Video Collection'
@@ -30,5 +31,11 @@ def add(request):
     return render(request, 'video_collector/add.html', {'new_video_form':new_video_form})
 
 def video_list(request):
-    videos = Video.objects.all()
-    return render(request, 'video_collector/video_list.html', {'videos':videos})
+    search_form = SearchForm(request.GET)  # build form from data user has sent to app
+    if search_form.is_valid():
+        search_term = search_form.cleaned_data['search_term']
+        videos = Video.objects.filter(name__icontains=search_term).order_by(Lower('name'))  # case-insensitive ordering
+    else:  # form is not filled in or it is the first time the user enter the page
+        search_form = SearchForm()
+        videos = Video.objects.order_by('name')
+    return render(request, 'video_collector/video_list.html', {'videos':videos, 'search_form':search_form})
