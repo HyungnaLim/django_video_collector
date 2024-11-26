@@ -19,3 +19,7 @@ def add(request):
 
     new_video_form = VideoForm
     return render(request, 'video_collector/add.html', {'new_video_form':new_video_form})
+
+def video_list(request):
+    videos = Video.objects.all()
+    return render(request, 'video_collector/video_list.html', {'videos':videos})
