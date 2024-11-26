@@ -1,3 +1,12 @@
 body {
     background-color: #FFE1E6;
 }
+
+.navigation {
+    margin: 10px;
+}
+
+.navigation > a {
+    color: green;
+    padding-right: 30px;
+}
